@@ -18,3 +18,19 @@ the data channel and being read as instructions. SQLi is SOLVED — parameterize
 queries enforce code/data separation. There is NO equivalent for prompt
 injection, which is why it stays #1 on the OWASP LLM list. Today I saw the
 solved ancestor of the problem I'm specializing in.
+
+
+## Lab 2 (Apprentice) — login bypass — SOLVED
+16 Sep 2026
+
+Login query: WHERE username = '...' AND password = '...'
+
+- Username field: `administrator'--`  (real characters, NOT %27 — it's a form,
+  not a URL). Password: anything (browser requires non-empty; the value is
+  irrelevant because it's commented out).
+- The `'` closes the username string, `--` comments out the whole
+  `AND password = '...'` check. Query becomes just "find administrator" →
+  logged in with no password. Full authentication bypass.
+
+Two SQLi weapons learned: OR 1=1 (force always-true) and '-- (delete the rest).
+Both = input escaping data channel into code = the SQLi ancestor of prompt injection.
